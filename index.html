@@ -2,14 +2,50 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
     <title>Rock Paper Scissors</title>
 </head>
 
 <body>
+            <div class="between">
+                <div class="left">
+                    <button id="rockButton" type="button"><img src="rock.png" alt="Rock" /></button>
+                    <button id="scissorsButton" type="button"><img src="scissors.png" alt="Scissors" /></button>
+                    <button id="paperButton" type="button"><img src="paper.png" alt="Paper" /></button>
+                </div>
+            
+                <div class ="between2">
+                    <div>
+                        <h1>First to 5 points wins!</h1>
+                    </div>
+                    <div class="scr">
+                        <div class="myP">
+                        <h1>Player Score</h1>
+                        <h2 id="scoreM"></h2>
+                    
+                    </div>
+                    <div class="comP">
+                        <h1>Computer Score</h1>
+                        <h2 id="scoreC"></h2>
+                    </div>
+                </div>
+
+<div><h1 Id="results"></h1></div>
+
+                </div>
+            
+                <div class="column">
+                    <button id="computerRock" type="button"><img src="rock.png" alt="Rock" /></button>
+                    <button id="computerScissors" type="button"><img src="scissors.png" alt="Scissors" /></button>
+                    <button id="computerPaper" type="button"><img src="paper.png" alt="Paper" /></button>
+                </div>
+            </div>
     <script>
 
         let yourScore = 0
         let computerScore = 0
+        let rw = ""
         const options = ["rock", "paper", "scissors"]
 
         function computerPlay() {
@@ -25,56 +61,148 @@
                     if (computerSelection == "rock")
                         return "Tie"
                     if (computerSelection == "paper")
-                        return "You Lose"
+                        return computerScore += 1
                     if (computerSelection == "scissors")
-                        return "You Win"
+                        return yourScore += 1
                     break;
                 case "paper":
                     if (computerSelection == "rock")
-                        return "You Win"
+                        return yourScore += 1
                     if (computerSelection == "paper")
                         return "Tie"
                     if (computerSelection == "scissors")
-                        return "You Lose"
+                        return computerScore += 1
                     break;
                 case "scissors":
                     if (computerSelection == "rock")
-                        return "You Lose"
+                        return computerScore += 1
                     if (computerSelection == "paper")
-                        return "You Win"
+                        return yourScore += 1
                     if (computerSelection == "scissors")
                         return "Tie"
                     break;
             }
         }
-        function game(yourScore, computerScore){
-            alert("First to 5 points win")
-
-            while (yourScore < 5 && computerScore < 5){
-                 let playerSelection = prompt("Enter rock, paper, or scissors")
-                 let computerSelection = computerPlay();
-                 computerPlay();
-                 console.log(playRound(playerSelection, computerSelection))
-
-                  switch (playRound(playerSelection, computerSelection)) {
-                     case "You Win":
-                      yourScore += 1
-                      break;
-                     case "You Lose":
-                      computerScore += 1
-                      break;
-                    case "Tie":
-                      break;
-                  }
-                 console.log(`Your score =  ${yourScore}  Computer score =  ${computerScore}`)
-             }
-             if (yourScore == 5)
-              return("You won the game!")
-             else if (computerScore == 5)
-               return("Computer won the game!")
+        function clearList(thelist) {
+            while (thelist.length > 0) {
+                thelist.remove(thelist.item(0));
             }
-console.log(game(yourScore,computerScore))
+        }
+        function reset(one, two, three){
+            home.textContent = yourScore
+            away.textContent = computerScore
+            clearList(one);
+            clearList(two);
+            clearList(three);
+        }
+                    
+        function clickRound(theClick){
+            playerSelection = theClick;
+            computerSelection = computerPlay();
+            var classListR = computerRock.classList;
+            var classListP = computerPaper.classList;
+            var classListS = computerScissors.classList;
+            clearList(classListR);
+            clearList(classListP);
+            clearList(classListS);
+            switch (computerSelection){
+                case "rock":
+                    computerRock.classList.add("computerPick");
+                    computerPaper.classList.add("notPick");
+                    computerScissors.classList.add("notPick");
+                    break;
+                case "paper":
+                    computerPaper.classList.add("computerPick");
+                    computerRock.classList.add("notPick");
+                    computerScissors.classList.add("notPick");
+                    break;
+                case "scissors":
+                    computerScissors.classList.add("computerPick");
+                    computerRock.classList.add("notPick");
+                    computerPaper.classList.add("notPick");
+                    break;
+            }
+            console.log(playRound(playerSelection, computerSelection));
+            switch (playerSelection.toLowerCase()) {
+                case "rock":
+                    if (computerSelection == "rock")
+                        rw = "Tie"
+                    if (computerSelection == "paper")
+                        rw = "You Lose!"
+                    if (computerSelection == "scissors")
+                        rw = "You Win!"
+                    break;
+                case "paper":
+                    if (computerSelection == "rock")
+                        rw = "You Win!"
+                    if (computerSelection == "paper")
+                        rw = "Tie"
+                    if (computerSelection == "scissors")
+                        rw = "You Lose!"
+                    break;
+                case "scissors":
+                    if (computerSelection == "rock")
+                        rw = "You Lose!"
+                    if (computerSelection == "paper")
+                        rw = "You Win!"
+                    if (computerSelection == "scissors")
+                        rw = "Tie"
+                    break;
+            }
+            home.textContent = yourScore
+            away.textContent = computerScore
+            results.textContent = rw;
+            if (yourScore >= 5){
+                confirm("You win the game!!!")
+                yourScore = 0
+                computerScore = 0
+                reset(classListR, classListP, classListS);
+            }
+            if (computerScore >= 5){
+                confirm("You lose the game:(")
+                computerScore = 0
+                yourScore = 0
+                reset(classListR, classListP, classListS);
+            }
+
+            }
+
+        
+            document.getElementById("rockButton").addEventListener("click",
+            function(){
+                console.log(clickRound(options[0]));
+            });
+            document.getElementById("scissorsButton").addEventListener("click",
+            function () {
+                console.log(clickRound(options[2]));
+            });
+            document.getElementById("paperButton").addEventListener("click",
+            function () {
+                console.log(clickRound(options[1]));
+            });
+            const scoreM = document.querySelector("#scoreM");
+            const scoreC = document.querySelector("#scoreC");
+
+            let results = document.querySelector("#results");
+            results.classList.add("results");
+            results.textContent = "Click to start";
+
+            let home = document.createElement("h1");
+            home.classList.add("home");
+            home.classList.add("box");
+            home.textContent = yourScore;
+
+            let away = document.createElement("h1");
+            away.classList.add("away");
+            away.classList.add("box");
+            away.textContent = computerScore;
+
+            scoreM.appendChild(home);
+            scoreC.appendChild(away);
+            
+
     </script>
+
 </body>
 
 </html>

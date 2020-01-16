@@ -1,0 +1,55 @@
+button{
+    margin:10px 0px;
+    padding:0;
+}
+
+button img{
+    width:150px;
+    height:150px;
+    display:block;
+}
+
+.column, .left{
+    display:flex;
+    flex-direction: column;
+}
+.between{
+    display:flex;
+    justify-content: space-between;
+    width:900px;
+    margin:50px auto;
+}
+
+.scr {
+    margin:50px 0;
+    display:flex;
+}
+
+.between2{
+    width:600px;
+    margin: auto 0;
+    text-align: center;
+}
+body{
+    background-color: #d1dde3;
+    font-family:arial;
+}
+.computerPick, #rockButton:hover, #paperButton:hover, #scissorsButton:hover{
+    transform: scale(1.1);
+    border-color: #ffc600;
+    box-shadow: 0 0 1rem #ffc600;
+}
+.notPick{
+    filter: grayscale(100%);
+}
+.myP, .comP{
+    width: 50%;
+}
+.box{
+   border:1px solid black;
+   width:50px;
+   margin:0 auto
+}
+.rsize{
+    font:50px ;
+}
